@@ -1,0 +1,55 @@
+CPAN-Testers-WWW-Reports-Parser
+===============================
+
+This distribution is the CPAN Testers reports data parser.
+
+This distribution is used to extract the data from either a JSON or a YAML file
+containing metadata regarding reports submitted by CPAN Testers, and available 
+from the CPAN Testers website.
+
+DEPENDENCIES
+
+The scripts require the following Perl modules to be installed:
+
+  Carp
+
+Requires one of the following, depending which type of parsing is required:
+
+  JSON::XS
+  YAML::XS
+
+INSTALLATION
+
+To install this module, untar the tarball into the directory of choice then
+type the following on the command line (substitute make with nmake or dmake
+if appropriate):
+
+  perl Makefile.PL
+  make
+  make test
+  make install
+
+Alternatively you may wish to use the CPAN.pm shell or CPANPLUS shell as your
+installer, which will automatically detect uninstalled prerequisities and 
+install those too for you.
+
+BUGS, PATCHES & FIXES
+
+There are no known bugs at the time of this release. However, if you spot a
+bug or are experiencing difficulties that are not explained within the POD
+documentation, please submit a bug to the RT system (see link below). However,
+it would help greatly if you are able to pinpoint problems or even supply a 
+patch. 
+
+Fixes are dependant upon their severity and my availablity. Should a fix not
+be forthcoming, please feel free to (politely) remind me by sending an email
+to barbie@cpan.org .
+
+RT: http://rt.cpan.org/Public/Dist/Display.html?Name=CPAN-Testers-WWW-Reports-Parser
+
+COPYRIGHT AND LICENCE
+
+  Copyright (C) 2009 Barbie for Miss Barbell Productions
+
+  This package is free software; you can redistribute it and/or 
+  modify it under the same terms as Perl itself.

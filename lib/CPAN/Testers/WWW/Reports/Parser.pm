@@ -36,8 +36,13 @@ sub new {
         'format' => uc $hash{'format'},
         'data'   =>    $hash{'data'},
         'file'   =>    $hash{'file'},
+        'report_objects'   =>    $hash{'report_objects'},
     };
     bless $self, $class;
+
+    if($self->{report_objects}) {
+        eval "use CPAN::Testers::WWW::Reports::Report";
+    }
 
     my $parser = 'CPAN::Testers::WWW::Reports::Parser::' . $self->{'format'};
     eval "use $parser";
@@ -131,6 +136,11 @@ sub report {
         }
     }
 
+    if($self->{report_objects}) {
+        my $rep = CPAN::Testers::WWW::Reports::Report->new(\%report);
+        return $rep;
+    }
+
     return \%report;
 }
 
@@ -177,6 +187,7 @@ CPAN::Testers::WWW::Reports::Parser - CPAN Testers reports data parser
   my $obj = CPAN::Testers::WWW::Reports::Parser->new(
         format => 'YAML',   # or 'JSON'
         file   => $file     # or data => $data
+        report_objects => 1, # Optional, works with $obj->report()
   );
 
   # iterator, accessing aternate field names
@@ -188,6 +199,9 @@ CPAN::Testers::WWW::Reports::Parser - CPAN Testers reports data parser
       # the individual field names, as the $data variable is a hashref to a
       # hash of a single report.
   }
+  
+  # if 'report_objects' was set, then $obj->report() will return
+  # CPAN::Testers::WWW::Reports::Report objects instead of a hashref
 
   # iterator, filtering field names
   $obj->filter(@fields);

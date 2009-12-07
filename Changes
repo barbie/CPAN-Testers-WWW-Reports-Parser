@@ -1,4 +1,8 @@
 Revision history for the CPAN-Testers-WWW-Reports-Parser distribution
 
+0.02    07/12/2009
+        - Add report_object config option
+        - CPAN::Testers::WWW::Reports::Report
+
 0.01    08/06/2009
         - Initial release

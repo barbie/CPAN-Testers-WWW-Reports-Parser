@@ -1,8 +1,10 @@
 Revision history for the CPAN-Testers-WWW-Reports-Parser distribution
 
-0.02    07/12/2009
-        - Add report_object config option
-        - CPAN::Testers::WWW::Reports::Report
+0.02    31/12/2009
+	- Ranguard patched distro to add the ability to return report objects
+	  rather than a hash. Added CPAN::Testers::WWW::Reports::Report module.
+	- minor amendments to Ranguards patches.
+	- added support for the Metabase GUID.
 
 0.01    08/06/2009
         - Initial release

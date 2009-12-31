@@ -1,10 +1,11 @@
 #!/usr/bin/perl -w
 use strict;
 
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 BEGIN {
 	use_ok( 'CPAN::Testers::WWW::Reports::Parser' );
+	use_ok( 'CPAN::Testers::WWW::Reports::Report' );
 
     eval "use JSON::XS";
 	SKIP: {

@@ -10,43 +10,43 @@ plan tests => 33;
 
 my $count           = 100;
 my $report_original = {
-    'ostext'       => 'Linux',
-    'version'      => '0.12',
-    'status'       => 'PASS',
-    'dist'         => undef,
-    'osvers'       => '2.6.27.19-5-default',
-    'csspatch'     => 'unp',
-    'state'        => 'pass',
-    'distribution' => 'App-Maisha',
-    'perl'         => '5.10.0',
-    'distversion'  => 'App-Maisha-0.12',
-    'cssperl'      => 'rel',
-    'osname'       => 'linux',
-    'platform'     => 's390x-linux',
-    'id'           => '3702934'
+    'ostext'        => 'Linux',
+    'version'       => '0.12',
+    'status'        => 'PASS',
+    'dist'          => undef,
+    'osvers'        => '2.6.27.19-5-default',
+    'csspatch'      => 'unp',
+    'state'         => 'pass',
+    'distribution'  => 'App-Maisha',
+    'perl'          => '5.10.0',
+    'distversion'   => 'App-Maisha-0.12',
+    'cssperl'       => 'rel',
+    'osname'        => 'linux',
+    'platform'      => 's390x-linux',
+    'id'            => '3702934'
 };
 my $report_filtered = {
-    'version'  => '0.12',
-    'grade'    => 'PASS',
-    'distname' => 'App-Maisha'
+    'version'       => '0.12',
+    'grade'         => 'PASS',
+    'distname'      => 'App-Maisha'
 };
 my $report_extended = {
-    'ostext'       => 'Linux',
-    'version'      => '0.12',
-    'status'       => 'PASS',
-    'grade'        => 'PASS',
-    'dist'         => undef,
-    'osvers'       => '2.6.27.19-5-default',
-    'csspatch'     => 'unp',
-    'state'        => 'pass',
-    'distribution' => 'App-Maisha',
-    'perl'         => '5.10.0',
-    'distversion'  => 'App-Maisha-0.12',
-    'cssperl'      => 'rel',
-    'osname'       => 'linux',
-    'platform'     => 's390x-linux',
-    'id'           => '3702934',
-    'distname'     => 'App-Maisha'
+    'ostext'        => 'Linux',
+    'version'       => '0.12',
+    'status'        => 'PASS',
+    'grade'         => 'PASS',
+    'dist'          => undef,
+    'osvers'        => '2.6.27.19-5-default',
+    'csspatch'      => 'unp',
+    'state'         => 'pass',
+    'distribution'  => 'App-Maisha',
+    'perl'          => '5.10.0',
+    'distversion'   => 'App-Maisha-0.12',
+    'cssperl'       => 'rel',
+    'osname'        => 'linux',
+    'platform'      => 's390x-linux',
+    'id'            => '3702934',
+    'distname'      => 'App-Maisha'
 };
 my @fields     = qw(distname version grade);
 my @all_fields = qw(
@@ -107,9 +107,9 @@ is( $reports, $count, '.. report count correct' );
 
     no strict 'refs';
     for (
-        qw(  id distribution dist distname version distversion perl
-        state status grade action osname ostext osvers platform
-        archname url csspatch cssperl )
+        qw( id distribution dist distname version distversion perl
+            state status grade action osname ostext osvers platform
+            archname url csspatch cssperl )
         )
     {
         is( $obj->$_(), $data->{$_},
@@ -119,23 +119,12 @@ is( $reports, $count, '.. report count correct' );
 
 # Test object
 my $obj_tester = CPAN::Testers::WWW::Reports::Parser->new(
-    'format'         => 'JSON',
-    'file'           => './t/samples/App-Maisha.json',
-    'report_objects' => 1,
+    'format'    => 'JSON',
+    'file'      => './t/samples/App-Maisha.json',
+    'objects'   => 1,
 );
 isa_ok( $obj_tester, 'CPAN::Testers::WWW::Reports::Parser' );
 
 my $report_obj = $obj_tester->report();
 isa_ok( $report_obj, 'CPAN::Testers::WWW::Reports::Report' );
 is($report_obj->version, '0.12', 'Got a version as expected');
-
-
-
-
-
-
-
-
-
-
-

@@ -3,12 +3,12 @@ WriteMakefile(
     'NAME'              => 'CPAN::Testers::WWW::Reports::Parser',
     'VERSION_FROM'      => 'lib/CPAN/Testers/WWW/Reports/Parser.pm',
     'PREREQ_PM'         => {
-        'Carp'              => 0,
+        'Carp'          => 0,
 
         # only one of the following is required.
 
-        #'JSON::XS'          => 0,
-        #'YAML::XS'          => 0,
+        #'JSON::XS'     => 0,
+        #'YAML::XS'     => 0,
     },
     'NO_META'           => 1,
 

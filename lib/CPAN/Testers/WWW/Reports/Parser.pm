@@ -1,5 +1,6 @@
 package CPAN::Testers::WWW::Reports::Parser;
 
+use 5.006;
 use strict;
 use warnings;
 
@@ -33,14 +34,14 @@ sub new {
     croak "Cannot access file [$hash{file}]\n"              if(defined $hash{file} && ! -f $hash{file});                    
 
     my $self = {
-        'format' => uc $hash{'format'},
-        'data'   =>    $hash{'data'},
-        'file'   =>    $hash{'file'},
-        'report_objects'   =>    $hash{'report_objects'},
+        'format'    => uc $hash{'format'},
+        'data'      =>    $hash{'data'},
+        'file'      =>    $hash{'file'},
+        'objects'   =>    $hash{'objects'},
     };
     bless $self, $class;
 
-    if($self->{report_objects}) {
+    if($self->{objects}) {
         eval "use CPAN::Testers::WWW::Reports::Report";
     }
 
@@ -136,7 +137,7 @@ sub report {
         }
     }
 
-    if($self->{report_objects}) {
+    if($self->{objects}) {
         my $rep = CPAN::Testers::WWW::Reports::Report->new(\%report);
         return $rep;
     }
@@ -182,26 +183,17 @@ CPAN::Testers::WWW::Reports::Parser - CPAN Testers reports data parser
 
 =head1 SYNOPSIS
 
+The parser can be used in two different ways, either by accessing each report
+as a hashref (each field having a key/value pair entry) or via an object.
+
+=head2 The hashref access API:
+
   use CPAN::Testers::WWW::Reports::Parser;
 
   my $obj = CPAN::Testers::WWW::Reports::Parser->new(
         format => 'YAML',   # or 'JSON'
         file   => $file     # or data => $data
-        report_objects => 1, # Optional, works with $obj->report()
   );
-
-  # iterator, accessing aternate field names
-  while( my $data = $obj->report() ) {
-      my $dist = $obj->distribution(); # or $obj->dist(), or $obj->distname()
-      ...
-
-      # note that the object is used to reference the methods retrieving
-      # the individual field names, as the $data variable is a hashref to a
-      # hash of a single report.
-  }
-  
-  # if 'report_objects' was set, then $obj->report() will return
-  # CPAN::Testers::WWW::Reports::Report objects instead of a hashref
 
   # iterator, filtering field names
   $obj->filter(@fields);
@@ -221,6 +213,28 @@ CPAN::Testers::WWW::Reports::Parser - CPAN Testers reports data parser
   my $data = $obj->reports(@fields);       # array of amended hashes
   my $data = $obj->reports('ALL',@fields); # array of original + amended hashes
 
+=head2 The object access API:
+
+  use CPAN::Testers::WWW::Reports::Parser;
+
+  # if 'objects' was set, then $obj->report() will return
+  # CPAN::Testers::WWW::Reports::Report objects instead of a hashref
+
+  my $obj = CPAN::Testers::WWW::Reports::Parser->new(
+        format  => 'YAML',   # or 'JSON'
+        file    => $file     # or data => $data
+        objects => 1,        # Optional, works with $obj->report()
+  );
+
+  # iterator, accessing aternate field names
+  while( my $data = $obj->report() ) {
+      my $dist = $obj->distribution(); # or $obj->dist(), or $obj->distname()
+      ...
+
+      # note that the object is used to reference the methods retrieving
+      # the individual field names, as the $data variable is a hashref to a
+      # hash of a single report.
+  }
 
 =head1 DESCRIPTION
 
@@ -239,8 +253,9 @@ from the CPAN Testers website.
 Instatiates the object CPAN::Testers::WWW::Reports::Parser:
 
   my $obj = CPAN::Testers::WWW::Reports::Parser->new(
-    format => 'YAML',   # or 'JSON'
-    file   => $file     # or data => $data
+    format  => 'YAML',  # or 'JSON'
+    file    => $file    # or data => $data
+    objects => 1        # optional, uses hash API if absent
   );
 
 =back
@@ -273,68 +288,73 @@ require, otherwise the default data hash is returned.
 
 =over
 
-=item *	id
+=item * id
 
-Report ID.
+Returns the current Report NNTP ID. Note that Metabase reports will always
+return a zero value.
 
-=item *	distribution
+=item * guid
 
-=item *	dist
+Returns the current Report GUID. This is the full Metabase GUID.
 
-=item *	distname
+=item * distribution
+
+=item * dist
+
+=item * distname
 
 Variations of the distribution name.
 
-=item *	version
+=item * version
 
 Distribution version.
 
-=item *	distversion
+=item * distversion
 
 Distribution name and version.
 
-=item *	perl
+=item * perl
 
 Version of perl used to test.
 
-=item *	state
+=item * state
 
-=item *	status
+=item * status
 
-=item *	grade
+=item * grade
 
-=item *	action
+=item * action
 
 Variations on the grade of the report. Note that 'state' represents the lower
 case version, while the others are upper case.
 
-=item *	osname
+=item * osname
 
 String extracted representing the Operating System name.
 
-=item *	ostext
+=item * ostext
 
 Normalised version of the Operating System name, where known, as occasionally
 the name may not correctly reflect a print friendly version of the name, or 
 even the actual name.
 
-=item *	osvers
+=item * osvers
 
 Operating System version, if known.
 
-=item *	platform
+=item * platform
 
-=item *	archname
+=item * archname
 
 The architecture name of the Operating System installed, as this usually
 gives more information about the setup of the smoke box, such as whether the
 OS is 64-bit or not.
 
-=item *	url
+=item * url
 
 The current path to an online version of the individual report.
 
-=item *	csspatch
+=item * csspatch
 
 Primarily used for web, provides a quick indicator as to whether this release
 was tested with a patched version of perl. Possible values are:
@@ -342,7 +362,7 @@ was tested with a patched version of perl. Possible values are:
   pat - patched
   unp - unpatched
 
-=item *	cssperl
+=item * cssperl
 
 Primarily used for web, provides a quick indicator as to whether this release
 was tested with a development version of perl. Possible values are:
@@ -381,7 +401,7 @@ F<http://blog.cpantesters.org/>
 
 =head1 COPYRIGHT AND LICENSE
 
-  Copyright (C) 2009 Barbie <barbie@cpan.org>
+  Copyright (C) 2009-2010 Barbie <barbie@cpan.org>
 
   This module is free software; you can redistribute it and/or
   modify it under the same terms as Perl itself.

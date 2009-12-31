@@ -1,5 +1,6 @@
 Changes
 lib/CPAN/Testers/WWW/Reports/Parser.pm
+lib/CPAN/Testers/WWW/Reports/Report.pm
 lib/CPAN/Testers/WWW/Reports/Parser/JSON.pm
 lib/CPAN/Testers/WWW/Reports/Parser/YAML.pm
 Makefile.PL

@@ -29,7 +29,8 @@ my $report_original = {
 my $report_filtered = {
     'version'       => '0.13',
     'grade'         => 'PASS',
-    'distname'      => 'App-Maisha'
+    'distname'      => 'App-Maisha',
+    'url'           => 'http://www.cpantesters.org/cpan/report/07046529-b19f-3f77-b713-d32bba55d77f'
 };
 my $report_extended = {
     'ostext'        => 'Linux',
@@ -49,9 +50,10 @@ my $report_extended = {
     'id'            => 7046516,
     'distname'      => 'App-Maisha',
     'dist'          => 'App-Maisha',
-    'guid'          => '07046529-b19f-3f77-b713-d32bba55d77f'
+    'guid'          => '07046529-b19f-3f77-b713-d32bba55d77f',
+    'url'           => 'http://www.cpantesters.org/cpan/report/07046529-b19f-3f77-b713-d32bba55d77f'
 };
-my @fields     = qw(distname version grade);
+my @fields = qw(distname version grade url);
 my @all_fields = qw(
     id distribution dist distname version distversion perl
     state status grade action osname ostext osvers platform

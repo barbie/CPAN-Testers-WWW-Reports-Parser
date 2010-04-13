@@ -168,7 +168,7 @@ sub osvers       { my $self = shift; return $self->{current}->{osvers}       }
 sub platform     { my $self = shift; return $self->{current}->{platform}     }
 sub archname     { my $self = shift; return $self->{current}->{platform}     }
 
-sub url          { my $self = shift; return $WEB . $self->{current}->{id}    }
+sub url          { my $self = shift; return $WEB . ($self->{current}->{guid} || $self->{current}->{id}) }
 
 sub csspatch     { my $self = shift; return $self->{current}->{csspatch}     }
 sub cssperl      { my $self = shift; return $self->{current}->{cssperl}      }

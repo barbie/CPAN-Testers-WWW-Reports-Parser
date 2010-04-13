@@ -1,5 +1,8 @@
 Revision history for the CPAN-Testers-WWW-Reports-Parser distribution
 
+0.03    12/04/2010
+	- added support for guid field.
+
 0.02    31/12/2009
 	- Ranguard patched distro to add the ability to return report objects
 	  rather than a hash. Added CPAN::Testers::WWW::Reports::Report module.

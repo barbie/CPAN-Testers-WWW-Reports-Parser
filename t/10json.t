@@ -8,45 +8,48 @@ eval "use JSON::XS";
 plan skip_all => "JSON::XS required for testing JSON parser" if $@;
 plan tests => 33;
 
-my $count           = 100;
+my $count           = 537;
 my $report_original = {
     'ostext'        => 'Linux',
-    'version'       => '0.12',
+    'version'       => '0.13',
     'status'        => 'PASS',
-    'dist'          => undef,
-    'osvers'        => '2.6.27.19-5-default',
+    'dist'          => 'App-Maisha',
+    'osvers'        => '2.6.26-2-686',
     'csspatch'      => 'unp',
     'state'         => 'pass',
     'distribution'  => 'App-Maisha',
-    'perl'          => '5.10.0',
-    'distversion'   => 'App-Maisha-0.12',
-    'cssperl'       => 'rel',
+    'perl'          => '5.11.5',
+    'distversion'   => 'App-Maisha-0.13',
+    'cssperl'       => 'dev',
     'osname'        => 'linux',
-    'platform'      => 's390x-linux',
-    'id'            => '3702934'
+    'platform'      => 'i686-linux',
+    'id'            => 7046516,
+    'guid'          => '07046529-b19f-3f77-b713-d32bba55d77f'
 };
 my $report_filtered = {
-    'version'       => '0.12',
+    'version'       => '0.13',
     'grade'         => 'PASS',
     'distname'      => 'App-Maisha'
 };
 my $report_extended = {
     'ostext'        => 'Linux',
-    'version'       => '0.12',
+    'version'       => '0.13',
     'status'        => 'PASS',
     'grade'         => 'PASS',
-    'dist'          => undef,
-    'osvers'        => '2.6.27.19-5-default',
+    'dist'          => 'App-Maisha',
+    'osvers'        => '2.6.26-2-686',
     'csspatch'      => 'unp',
     'state'         => 'pass',
     'distribution'  => 'App-Maisha',
-    'perl'          => '5.10.0',
-    'distversion'   => 'App-Maisha-0.12',
-    'cssperl'       => 'rel',
+    'perl'          => '5.11.5',
+    'distversion'   => 'App-Maisha-0.13',
+    'cssperl'       => 'dev',
     'osname'        => 'linux',
-    'platform'      => 's390x-linux',
-    'id'            => '3702934',
-    'distname'      => 'App-Maisha'
+    'platform'      => 'i686-linux',
+    'id'            => 7046516,
+    'distname'      => 'App-Maisha',
+    'dist'          => 'App-Maisha',
+    'guid'          => '07046529-b19f-3f77-b713-d32bba55d77f'
 };
 my @fields     = qw(distname version grade);
 my @all_fields = qw(
@@ -127,4 +130,4 @@ isa_ok( $obj_tester, 'CPAN::Testers::WWW::Reports::Parser' );
 
 my $report_obj = $obj_tester->report();
 isa_ok( $report_obj, 'CPAN::Testers::WWW::Reports::Report' );
-is($report_obj->version, '0.12', 'Got a version as expected');
+is($report_obj->version, '0.13', 'Got a version as expected');

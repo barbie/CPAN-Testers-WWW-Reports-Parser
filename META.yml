@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                     CPAN-Testers-WWW-Reports-Parser
-version:                  0.02
+version:                  0.03
 abstract:                 CPAN Testers reports data parser
 author:
   - Barbie <barbie@cpan.org>
@@ -24,16 +24,16 @@ build_requires:
 provides:
   CPAN::Testers::WWW::Reports::Parser:
     file:     lib/CPAN/Testers/WWW/Reports/Parser.pm
-    version:  0.02
+    version:  0.03
   CPAN::Testers::WWW::Reports::Report:
     file:     lib/CPAN/Testers/WWW/Reports/Report.pm
-    version:  0.02
+    version:  0.03
   CPAN::Testers::WWW::Reports::Parser::JSON:
     file:     lib/CPAN/Testers/WWW/Reports/Parser/JSON.pm
-    version:  0.02
+    version:  0.03
   CPAN::Testers::WWW::Reports::Parser::YAML:
     file:     lib/CPAN/Testers/WWW/Reports/Parser/YAML.pm
-    version:  0.02
+    version:  0.03
 no_index:
   directory:
     - t

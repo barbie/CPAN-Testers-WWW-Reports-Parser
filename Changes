@@ -7,6 +7,8 @@ Revision history for the CPAN-Testers-WWW-Reports-Parser distribution
         - added LICENSE file.
         - added META.json.
         - reworked test suite.
+        - added reload method.
+        - fixed repeated GLOB loading.
 
 0.03    2010-04-12
         - added support for guid field.

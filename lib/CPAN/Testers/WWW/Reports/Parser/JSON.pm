@@ -12,9 +12,6 @@ $VERSION = '0.03';
 use JSON::XS;
 
 #----------------------------------------------------------------------------
-# Variables
-
-#----------------------------------------------------------------------------
 # The Application Programming Interface
 
 sub new {
@@ -49,6 +46,7 @@ sub _load_file {
 
     if (ref $file eq 'GLOB') {
         $fh = $file;
+        seek($fh,0,0);
     } else {
         open $fh, '<', $file     or die "Cannot open file [$file]: $!\n";
     }

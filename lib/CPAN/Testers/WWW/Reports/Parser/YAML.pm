@@ -39,8 +39,11 @@ sub register {
 
 sub raw_data {
     my $self = shift;
-    return Load($self->{data})  if($self->{data});
-    return LoadFile($self->{file});
+    if($self->{file}) {
+        seek($self->{file},0,0) if(ref $self->{file} eq 'GLOB');
+        return LoadFile($self->{file});
+    }
+    return Load($self->{data});
 }
 
 q{ Kein Zurück für dich };

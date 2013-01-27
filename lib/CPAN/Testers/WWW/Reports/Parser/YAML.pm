@@ -1,6 +1,5 @@
 package CPAN::Testers::WWW::Reports::Parser::YAML;
 
-use 5.006;
 use strict;
 use warnings;
 

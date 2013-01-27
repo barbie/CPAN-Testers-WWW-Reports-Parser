@@ -10,6 +10,7 @@ distribution_type:        module
 installdirs:              site
 
 requires:
+  perl:                           5.006
   Carp:                           0
 recommends:
   JSON::XS:                       0

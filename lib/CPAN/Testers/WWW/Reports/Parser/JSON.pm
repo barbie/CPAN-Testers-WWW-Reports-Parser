@@ -1,6 +1,5 @@
 package CPAN::Testers::WWW::Reports::Parser::JSON;
 
-use 5.006;
 use strict;
 use warnings;
 

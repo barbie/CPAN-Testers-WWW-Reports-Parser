@@ -3,6 +3,8 @@ Revision history for the CPAN-Testers-WWW-Reports-Parser distribution
         - spelling fixes. (thanks to Florian Schlichting & Gregor Herrmann).
         - change file dates changed to meet W3CDTF standards.
         - reworked Makefile.PL for clarity.
+        - License updated to Artistic License v2.0.
+        - added LICENSE file.
 
 0.03    2010-04-12
         - added support for guid field.

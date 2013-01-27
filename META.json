@@ -65,9 +65,25 @@
     },
 
     "provides": {
-        "CPAN::Testers::WWW::Statistics::Excel": {
-            "file": "lib/CPAN/Testers/WWW/Statistics/Excel.pm",
-            "version": "0.04"
+        "CPAN::Testers::WWW::Reports::Parser": {
+            "file": "lib/CPAN/Testers/WWW/Reports/Parser.pm",
+            "version": "0.03"
+        },
+        "CPAN::Testers::WWW::Reports::Report": {
+            "file": "lib/CPAN/Testers/WWW/Reports/Report.pm",
+            "version": "0.03"
+        },
+        "CPAN::Testers::WWW::Reports::Parser::JSON": {
+            "file": "lib/CPAN/Testers/WWW/Reports/Parser/JSON.pm",
+            "version": "0.03"
+        },
+        "CPAN::Testers::WWW::Reports::Parser::YAML": {
+            "file": "lib/CPAN/Testers/WWW/Reports/Parser/YAML.pm",
+            "version": "0.03"
+        },
+        "CPAN::Testers::WWW::Reports::Report": {
+            "file": "lib/CPAN/Testers/WWW/Reports/Report.pm",
+            "version": "0.03"
         }
     },
     "no_index": {
@@ -77,10 +93,10 @@
     "resources": {
         "license": "http://www.perlfoundation.org/artistic_license_2_0",
         "homepage": "http://stats.cpantesters.org",
-        "bugtracker": { "web": "http://rt.cpan.org/Public/Dist/Display.html?Name=CPAN-Testers-WWW-Statistics-Excel" },
+        "bugtracker": { "web": "http://rt.cpan.org/Public/Dist/Display.html?Name=CPAN-Testers-WWW-Reports-Parser" },
         "repository": {
-            "url": "git://github.com/barbie/cpan-testers-www-statistics-excel.git",
-            "web": "http://github.com/barbie/cpan-testers-www-statistics-excel",
+            "url": "git://github.com/barbie/CPAN-Testers-WWW-Reports-Parser.git",
+            "web": "http://github.com/barbie/CPAN-Testers-WWW-Reports-Parser",
             "type": "git"
         }
     }

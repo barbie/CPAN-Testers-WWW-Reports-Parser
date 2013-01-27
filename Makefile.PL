@@ -6,13 +6,6 @@ use 5.006;
 
 use ExtUtils::MakeMaker;
 
-print <<HERE;
-
-  Please note that the tests within this distribution can take a long time
-  to run. As such, be prepared to wait a little while to get the results.
-
-HERE
-
 WriteMakefile(
     AUTHOR              => 'Barbie <barbie@cpan.org>',
     NAME                => 'CPAN::Testers::WWW::Reports::Parser',

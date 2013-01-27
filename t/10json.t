@@ -1,8 +1,9 @@
 #!/usr/bin/perl -w
 use strict;
-use Test::More;
+
 use CPAN::Testers::WWW::Reports::Parser;
-use Data::Dumper;
+#use Data::Dumper;
+use Test::More;
 
 eval "use JSON::XS";
 plan skip_all => "JSON::XS required for testing JSON parser" if $@;

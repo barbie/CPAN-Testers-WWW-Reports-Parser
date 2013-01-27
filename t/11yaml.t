@@ -1,8 +1,9 @@
 #!/usr/bin/perl -w
 use strict;
-use Test::More;
+
 use CPAN::Testers::WWW::Reports::Parser;
-use Data::Dumper;
+#use Data::Dumper;
+use Test::More;
 
 eval "use YAML::XS";
 plan skip_all => "YAML::XS required for testing YAML parser" if $@;
@@ -113,4 +114,3 @@ is($reports,$count,'.. report count correct');
         is($obj->$_(),$data->{$_},".. field '$_' matches direct and indirect access");
     }
 }
-

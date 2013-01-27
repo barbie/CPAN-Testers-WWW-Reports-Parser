@@ -6,6 +6,7 @@ Revision history for the CPAN-Testers-WWW-Reports-Parser distribution
         - License updated to Artistic License v2.0.
         - added LICENSE file.
         - added META.json.
+        - reworked test suite.
 
 0.03    2010-04-12
         - added support for guid field.

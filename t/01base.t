@@ -19,4 +19,3 @@ BEGIN {
         use_ok( 'CPAN::Testers::WWW::Reports::Parser::YAML' );
     }
 }
-

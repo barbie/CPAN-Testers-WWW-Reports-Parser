@@ -7,7 +7,7 @@ use Test::More;
 
 eval "use JSON::XS";
 plan skip_all => "JSON::XS required for testing JSON parser" if $@;
-plan tests => 33;
+plan tests => 49;
 
 my $count           = 537;
 my $report_original = {
@@ -60,77 +60,143 @@ my @all_fields = qw(
     state status grade action osname ostext osvers platform
     archname url csspatch cssperl);
 
-my $obj = CPAN::Testers::WWW::Reports::Parser->new(
-    'format' => 'JSON',
-    'file'   => './t/samples/App-Maisha.json'
-);
-isa_ok( $obj, 'CPAN::Testers::WWW::Reports::Parser' );
-
-my $data = $obj->reports();
-
-#diag(Dumper($data->[0]));
-is( scalar(@$data), $count, '.. report count correct' );
-is_deeply( $data->[0], $report_original, '.. matches original report' );
-
-$data = $obj->reports(@fields);
-
-#diag(Dumper($data->[0]));
-is( scalar(@$data), $count, '.. report count correct' );
-is_deeply( $data->[0], $report_filtered, '.. matches filtered report' );
-
-$data = $obj->reports( 'ALL', @fields );
-
-#diag(Dumper($data->[0]));
-is( scalar(@$data), $count, '.. report count correct' );
-is_deeply( $data->[0], $report_extended, '.. matches extended report' );
-
-$obj->filter();
-$data = $obj->report();
-is_deeply( $data, $report_original, '.. matches original report' );
-
-$obj->{loaded} = 0;
-$obj->filter(@fields);
-$data = $obj->report();
-
-#diag(Dumper($data));
-is_deeply( $data, $report_filtered, '.. matches filtered report' );
-
-$obj->{loaded} = 0;
-$obj->filter( 'ALL', @fields );
-$data = $obj->report();
-is_deeply( $data, $report_extended, '.. matches extended report' );
-
-$obj->{loaded} = 0;
-$obj->filter();
-my $reports = 0;
-while ( $data = $obj->report() ) { $reports++ }
-is( $reports, $count, '.. report count correct' );
-
+# file tests
 {
-    $obj->{loaded} = 0;
-    $obj->filter(@all_fields);
+    my $obj = CPAN::Testers::WWW::Reports::Parser->new(
+        'format' => 'JSON',
+        'file'   => './t/samples/App-Maisha.json'
+    );
+    isa_ok( $obj, 'CPAN::Testers::WWW::Reports::Parser' );
+
+    my $data = $obj->reports();
+
+    #diag(Dumper($data->[0]));
+    is( scalar(@$data), $count, '.. report count correct' );
+    is_deeply( $data->[0], $report_original, '.. matches original report' );
+
+    $data = $obj->reports(@fields);
+
+    #diag(Dumper($data->[0]));
+    is( scalar(@$data), $count, '.. report count correct' );
+    is_deeply( $data->[0], $report_filtered, '.. matches filtered report' );
+
+    $data = $obj->reports( 'ALL', @fields );
+
+    #diag(Dumper($data->[0]));
+    is( scalar(@$data), $count, '.. report count correct' );
+    is_deeply( $data->[0], $report_extended, '.. matches extended report' );
+
+    $obj->filter();
+    $data = $obj->report();
+    is_deeply( $data, $report_original, '.. matches original report' );
+
+    $obj->reload;
+    $obj->filter(@fields);
     $data = $obj->report();
 
-    no strict 'refs';
-    for (
-        qw( id distribution dist distname version distversion perl
-            state status grade action osname ostext osvers platform
-            archname url csspatch cssperl )
-        )
+    #diag(Dumper($data));
+    is_deeply( $data, $report_filtered, '.. matches filtered report' );
+
+    $obj->reload;
+    $obj->filter( 'ALL', @fields );
+    $data = $obj->report();
+    is_deeply( $data, $report_extended, '.. matches extended report' );
+
+    $obj->reload;
+    $obj->filter();
+    my $reports = 0;
+    while ( $data = $obj->report() ) { $reports++ }
+    is( $reports, $count, '.. report count correct' );
+
     {
-        is( $obj->$_(), $data->{$_},
-            ".. field '$_' matches direct and indirect access" );
+        $obj->reload;
+        $obj->filter(@all_fields);
+        $data = $obj->report();
+
+        no strict 'refs';
+        for (
+            qw( id distribution dist distname version distversion perl
+                state status grade action osname ostext osvers platform
+                archname url csspatch cssperl )
+            )
+        {
+            is( $obj->$_(), $data->{$_},
+                ".. field '$_' matches direct and indirect access" );
+        }
     }
+
+    # Test object
+    my $obj_tester = CPAN::Testers::WWW::Reports::Parser->new(
+        'format'    => 'JSON',
+        'file'      => './t/samples/App-Maisha.json',
+        'objects'   => 1,
+    );
+    isa_ok( $obj_tester, 'CPAN::Testers::WWW::Reports::Parser' );
+
+    my $report_obj = $obj_tester->report();
+    isa_ok( $report_obj, 'CPAN::Testers::WWW::Reports::Report' );
+    is($report_obj->version, '0.13', 'Got a version as expected');
 }
 
-# Test object
-my $obj_tester = CPAN::Testers::WWW::Reports::Parser->new(
-    'format'    => 'JSON',
-    'file'      => './t/samples/App-Maisha.json',
-    'objects'   => 1,
-);
-isa_ok( $obj_tester, 'CPAN::Testers::WWW::Reports::Parser' );
+# glob tests
+{
+    open FILE, '<', './t/samples/App-Maisha.json';
 
-my $report_obj = $obj_tester->report();
-isa_ok( $report_obj, 'CPAN::Testers::WWW::Reports::Report' );
-is($report_obj->version, '0.13', 'Got a version as expected');
+    # Test object
+    my $obj = CPAN::Testers::WWW::Reports::Parser->new(
+        'format'    => 'JSON',
+        'file'      => \*FILE
+    );
+    isa_ok( $obj, 'CPAN::Testers::WWW::Reports::Parser' );
+
+    my $data = $obj->reports();
+
+    is( scalar(@$data), $count, '.. report count correct' );
+    is_deeply( $data->[0], $report_original, '.. matches original report' );
+
+    $data = $obj->reports(@fields);
+
+    #diag(Dumper($data->[0]));
+    is( scalar(@$data), $count, '.. report count correct' );
+    is_deeply( $data->[0], $report_filtered, '.. matches filtered report' );
+
+    $data = $obj->reports( 'ALL', @fields );
+    is( scalar(@$data), $count, '.. report count correct' );
+    is_deeply( $data->[0], $report_extended, '.. matches extended report' );
+
+    $obj->filter();
+    $data = $obj->report();
+    is_deeply( $data, $report_original, '.. matches original report' );
+}
+
+# data tests
+{
+    open FILE, '<', './t/samples/App-Maisha.json';
+    my $data = do { local $/; <FILE> };
+
+    # Test object
+    my $obj = CPAN::Testers::WWW::Reports::Parser->new(
+        'format'    => 'JSON',
+        'data'      => $data
+    );
+    isa_ok( $obj, 'CPAN::Testers::WWW::Reports::Parser' );
+
+    $data = $obj->reports();
+
+    is( scalar(@$data), $count, '.. report count correct' );
+    is_deeply( $data->[0], $report_original, '.. matches original report' );
+
+    $data = $obj->reports(@fields);
+
+    #diag(Dumper($data->[0]));
+    is( scalar(@$data), $count, '.. report count correct' );
+    is_deeply( $data->[0], $report_filtered, '.. matches filtered report' );
+
+    $data = $obj->reports( 'ALL', @fields );
+    is( scalar(@$data), $count, '.. report count correct' );
+    is_deeply( $data->[0], $report_extended, '.. matches extended report' );
+
+    $obj->filter();
+    $data = $obj->report();
+    is_deeply( $data, $report_original, '.. matches original report' );
+}

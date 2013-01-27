@@ -1,5 +1,6 @@
 Revision history for the CPAN-Testers-WWW-Reports-Parser distribution
 
+0.04    2013-01-27
         - spelling fixes. (thanks to Florian Schlichting & Gregor Herrmann).
         - change file dates changed to meet W3CDTF standards.
         - reworked Makefile.PL for clarity.

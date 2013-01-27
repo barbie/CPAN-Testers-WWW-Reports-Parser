@@ -144,6 +144,11 @@ sub report {
     return \%report;
 }
 
+sub reload {
+    my $self = shift;
+    $self->{loaded} = 0;
+}
+
 
 # transpose legacy field names to current field names
 
@@ -281,6 +286,11 @@ arguments as per filter(), or will used any previously set filter() state.
 
 Returns a single report data hash. Use filter() to set what field names you
 require, otherwise the default data hash is returned.
+
+=item * reload
+
+The report method cycles round the current data set. If you wish to repeat the
+cycle, call reload to reset to the beginning of the data set.
 
 =back
 

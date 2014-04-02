@@ -1,4 +1,7 @@
-Revision history for the CPAN-Testers-WWW-Reports-Parser distribution
+Revision history for CPAN-Testers-WWW-Reports-Parser
+====================================================
+
+        - Pod::Coverage does like it if JSON::XS and YAML::XS are not insalled.
 
 0.04    2013-01-27
         - spelling fixes. (thanks to Florian Schlichting & Gregor Herrmann).

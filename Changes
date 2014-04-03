@@ -1,6 +1,7 @@
 Revision history for CPAN-Testers-WWW-Reports-Parser
 ====================================================
 
+0.05    2014-04-03
         - Pod::Coverage doesn't like it if JSON::XS and YAML::XS are not 
           installed.
         - fixed homepage link in META.

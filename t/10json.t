@@ -7,7 +7,7 @@ use Test::More;
 
 eval "use JSON::XS";
 plan skip_all => "JSON::XS required for testing JSON parser" if $@;
-plan tests => 49;
+plan tests => 57;
 
 my $count           = 537;
 my $report_original = {
@@ -59,6 +59,41 @@ my @all_fields = qw(
     id distribution dist distname version distversion perl
     state status grade action osname ostext osvers platform
     archname url csspatch cssperl);
+
+# failure tests
+{
+    my $obj;
+    eval {
+        $obj = CPAN::Testers::WWW::Reports::Parser->new();
+    };
+    like($@,qr/No data format specified/);
+    is( $obj, undef );
+
+    eval {
+        $obj = CPAN::Testers::WWW::Reports::Parser->new(
+            'format' => 'CSV'
+        );
+    };
+    like($@,qr/Unknown data format specified/);
+    is( $obj, undef );
+
+    eval {
+        $obj = CPAN::Testers::WWW::Reports::Parser->new(
+            'format' => 'JSON'
+        );
+    };
+    like($@,qr/Must specify a file or data block to parse/);
+    is( $obj, undef );
+
+    eval {
+        $obj = CPAN::Testers::WWW::Reports::Parser->new(
+            'format' => 'JSON',
+            'file'   => 'missing-file.json'
+        );
+    };
+    like($@,qr/Cannot access file/);
+    is( $obj, undef );
+}
 
 # file tests
 {

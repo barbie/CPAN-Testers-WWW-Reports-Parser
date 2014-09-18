@@ -7,7 +7,7 @@ use Test::More;
 
 eval "use YAML::XS";
 plan skip_all => "YAML::XS required for testing YAML parser" if $@;
-plan tests => 46;
+plan tests => 50;
 
 my $count = 537;
 my $report_original = {
@@ -60,6 +60,27 @@ my @all_fields = qw(
             id distribution dist distname version distversion perl 
             state status grade action osname ostext osvers platform 
             archname url csspatch cssperl);
+
+# failure tests
+{
+    my $obj;
+    eval {
+        $obj = CPAN::Testers::WWW::Reports::Parser->new(
+            'format' => 'YAML'
+        );
+    };
+    like($@,qr/Must specify a file or data block to parse/);
+    is( $obj, undef );
+
+    eval {
+        $obj = CPAN::Testers::WWW::Reports::Parser->new(
+            'format' => 'YAML',
+            'file'   => 'missing-file.yml'
+        );
+    };
+    like($@,qr/Cannot access file/);
+    is( $obj, undef );
+}
 
 # file tests
 {

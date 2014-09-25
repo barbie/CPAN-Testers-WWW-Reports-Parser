@@ -1,6 +1,7 @@
 Revision history for CPAN-Testers-WWW-Reports-Parser
 ====================================================
 
+0.06    2014-09-25
         - fixed license fields in META.json to be lists.
         - extended META test suite.
         - extended functional test suites.
